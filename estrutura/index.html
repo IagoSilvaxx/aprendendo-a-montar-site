@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#100d14">
+        <title>Meu Perfil</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" href="../estrutura%20css/style.css">
+    </head>
+
+    <body>
+        <main class="perfil">
+            <img src="img/Iago.jpg" class="foto" alt="Foto de perfil">
+            <h1>Iago Rafael</h1>
+            <p class="usuario">@Twyxznn</p>
+            <p class="mensagem">Estou aprendendo a criar sites. Quer conversar? Clique em um dos ícones para me chamar.</p>
+
+            <nav class="redes" aria-label="Redes sociais">
+                <a href="https://www.instagram.com/iagokx7_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.tiktok.com/@iagokx7" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+                    <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/IagoSilvaxx" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+                    <i class="fa-brands fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="https://discord.com/users/716038373105467525/" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord">
+                    <i class="fa-brands fa-discord" aria-hidden="true"></i>
+                </a>
+            </nav>
+
+            <div class="player-musica">
+                <audio id="musica-fundo" preload="auto">
+                    <source src="audio/perfil.mp3" type="audio/mpeg">
+                </audio>
+                <button id="controle-musica" class="controle-musica" type="button" aria-label="Tocar música" title="Tocar música">
+                    <i class="fa-solid fa-play icone-tocar" aria-hidden="true"></i>
+                    <i class="fa-solid fa-pause icone-pausar" aria-hidden="true" hidden></i>
+                </button>
+            </div>
+        </main>
+
+        <script>
+            const musica = document.getElementById("musica-fundo");
+            const controleMusica = document.getElementById("controle-musica");
+            const iconeTocar = controleMusica.querySelector(".icone-tocar");
+            const iconePausar = controleMusica.querySelector(".icone-pausar");
+            const inicioRefrao = 23;
+            const fimRefrao = 50;
+
+            musica.volume = 0.5;
+
+            const atualizarControle = () => {
+                const estaTocando = !musica.paused;
+                iconeTocar.hidden = estaTocando;
+                iconePausar.hidden = !estaTocando;
+                controleMusica.setAttribute("aria-label", estaTocando ? "Pausar música" : "Continuar música");
+                controleMusica.title = estaTocando ? "Pausar música" : "Continuar música";
+            };
+
+            const posicionarNoRefrao = () => {
+                if (musica.currentTime < inicioRefrao || musica.currentTime >= fimRefrao) {
+                    musica.currentTime = inicioRefrao;
+                }
+            };
+
+            controleMusica.addEventListener("click", async () => {
+                if (musica.paused) {
+                    if (musica.readyState >= HTMLMediaElement.HAVE_METADATA) {
+                        posicionarNoRefrao();
+                    }
+
+                    try {
+                        await musica.play();
+                    } catch {
+                        atualizarControle();
+                    }
+                } else {
+                    musica.pause();
+                }
+            });
+
+            musica.addEventListener("play", atualizarControle);
+            musica.addEventListener("pause", atualizarControle);
+            const iniciarRefrao = () => {
+                posicionarNoRefrao();
+                musica.play().catch(atualizarControle);
+            };
+
+            if (musica.readyState >= HTMLMediaElement.HAVE_METADATA) {
+                iniciarRefrao();
+            } else {
+                musica.addEventListener("loadedmetadata", iniciarRefrao, { once: true });
+            }
+
+            musica.addEventListener("timeupdate", () => {
+                if (musica.currentTime >= fimRefrao) {
+                    musica.currentTime = inicioRefrao;
+                    if (!musica.paused) {
+                        musica.play().catch(atualizarControle);
+                    }
+                }
+            });
+            atualizarControle();
+        </script>
+    </body>
+</html>

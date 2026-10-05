@@ -1,0 +1,150 @@
+:root {
+    color-scheme: dark;
+    --background: #100d14;
+    --surface: #19131f;
+    --line: #493653;
+    --text: #fbf8ff;
+    --muted: #c8bdcf;
+    --purple: #c084fc;
+    --red: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 24px;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #100d14 0%, #1b1122 52%, #100d14 100%);
+    color: var(--text);
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.perfil {
+    width: min(100%, 420px);
+    padding: 40px 28px 32px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--red);
+    border-radius: 8px;
+    background: linear-gradient(145deg, rgb(16 13 20 / 80%), rgb(16 13 20 / 92%)), url("../estrutura/img/fundo-perfil.jpeg") center / cover;
+    text-align: center;
+    box-shadow: 0 24px 70px rgb(0 0 0 / 35%);
+}
+
+.foto {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: #21182a;
+    box-shadow: 0 0 0 5px rgb(239 68 68 / 16%);
+    object-fit: cover;
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.usuario {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+}
+
+.mensagem {
+    max-width: 320px;
+    margin: 18px auto 0;
+    color: var(--text);
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+.redes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.redes a {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.75rem;
+    text-decoration: none;
+    transition: transform 300ms ease, background-color 300ms ease, border-color 300ms ease;
+}
+
+.redes a:hover {
+    transform: scale(1.2);
+    border-color: var(--red);
+    background: var(--red);
+}
+
+.redes a:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 4px;
+}
+
+.player-musica {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.controle-musica {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 160ms ease, transform 160ms ease;
+}
+
+.controle-musica:hover {
+    transform: scale(1.12);
+    color: var(--red);
+}
+
+.controle-musica:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 18px;
+    }
+
+    .perfil {
+        padding: 34px 22px 28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .redes a {
+        transition: none;
+    }
+}
